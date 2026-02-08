@@ -17,17 +17,18 @@ The weight assigned to each factor is determined by its correlation coefficient,
 
 After implementing the scoring system, products are identified as having low (below the 25th percentile) or median (25th to 50th percentile) quality scores. To maximize return on investment (ROI), a corrective action plan is specifically generated for products that exhibit both a high potential for sales increase and issues that are straightforward to resolve, such as those related to product titles.  
 
-**Key Findings**
+**Key Findings**  
 Main insights from EDA  
 * quantative metrics:  
 >The total sales are 239,699, which indicates a relatively low (2.39) sales per product.  Median price is 250, variation range is very large due to different product types. 99.99% of products never change price since listing is created.  
 * qualitative metrics:  
-> >titles: there are 98,823 unique titles grouped under 10,907 categories. Average title length is 45 characters (ranging from 1 to 100). length of title has positive impact on sales with correlation coefficient = 0.625  
-video: only 2985 (about 3%) products with video links.   
-> >image: about 33.3% products have 1 picture, about 64.3% have 2-6 pictures. Only 789 products (about 0.8%) are missing pictures. Majority of picture size is 500x375 or 500x500 and majority of max pricture size 1200x900  
-> >update frequency: ~70% of listings have never been updated since creation, ~30% are updated within 2 months.  
-> >attribute completeness: ~87% products have blank attributes, and ~10% have 1 or 2 entries. For those products who have at least one entries, about 80% have complete field information.  entry number (correlation  0.039) and completeness (correlation 0.091 ) both have positive impact on sales.   
-> >shipping info completeness：all products have shipping and there is mininal differentiation regarding completeness.
+> >* titles: there are 98,823 unique titles grouped under 10,907 categories. Average title length is 45 characters (ranging from 1 to 100). length of title has positive impact on sales with correlation coefficient = 0.625  
+> >* video: only 2985 (about 3%) products with video links.   
+> >* image: about 33.3% products have 1 picture, about 64.3% have 2-6 pictures. Only 789 products (about 0.8%) are missing pictures. Majority of picture size is 500x375 or 500x500 and majority of max pricture size 1200x900  
+> >* update frequency: ~70% of listings have never been updated since creation, ~30% are updated within 2 months.  
+> >* attribute completeness: ~87% products have blank attributes, and ~10% have 1 or 2 entries. For those products who have at least one entries, about 80% have complete field information.  entry number (correlation  0.039) and completeness (correlation 0.091 ) both have positive impact on sales.   
+> >* shipping info completeness：all products have shipping and there is mininal differentiation regarding completeness.
+
 
 
 Distribution of quality scores  
@@ -37,6 +38,7 @@ Average quality score is 29.35 with standard deviation of 9.54. Score distributi
 > >Fair (41-60)        :   9807 products (  9.8%)  
 > >Poor (21-40)        :  83474 products ( 83.5%)  
 > >Very Poor (0-20)    :    747 products (  0.7%)  
+
 
 Patterns identified    
 Sales are highly concentrated, with top performers driven by category selection and listing quality rather than price. Key drivers include high attribute completeness, multiple pictures, and updated listings, which strongly correlate with quality scores. However, many listings underperform due to poor quality and incomplete information, despite some having good individual metrics.  
@@ -69,10 +71,10 @@ Top 5 recommendations are:
 Based on the assumption products with quality score lower than 25th percentile can be improved by 10%, sales increase is 189 units and revenue increase is $160,972.57. if improved by 25%, sales increase is 473 units and revenue increase is $402,431.43.  
 
 
-**GenAI Usage**:
+**GenAI Usage**:  
 Tools: deepseek  
 sample prompt:    
->system_prompt = '''
+system_prompt = '''
 You are an experienced e-commerce optimization specialist for MercadoLibre.
 Your expertise is in identifying and fixing non-title related listing quality issues.
 
@@ -88,9 +90,8 @@ Your task is to:
 2. Identify the specific non-title issues causing low scores
 3. Provide actionable, specific recommendations
 4. Focus on quick wins that sellers can implement immediately
-
 '''    
->input_prompt = f'''
+input_prompt = f'''
 LISTINGS DATA:
 Total listings analyzed: {len(listings_data)}
 All listings have: Good title scores (≥70) but Low overall quality scores (≤60)
@@ -146,18 +147,19 @@ FORMAT RESPONSE AS JSON:
 
 Focus on PRACTICAL, ACTIONABLE advice that sellers can implement without technical expertise.
 '''  
-> sample output is shown below
+
+sample output is shown below  
 ![sample_output](../image/result_fin.png)  
 
 Value delivered  
 This diagnostic assessment details the reasons behind low listing quality and outlines corrective action plans. Given the multitude of potential causes, AI efficiently filters and prioritizes the issues offering the highest incremental benefit—that is, those whose resolution would have a quantifiable impact on sales. Consequently, it not only generates considerable savings in time and labor but also ensures that efforts are channeled toward the most critical areas.
 
-**Visualization**
-I used Gradio to build the dashboard for easier intergration with GenAI. 
+**Visualization**  
+I used Gradio to build the dashboard for easier intergration with GenAI.  
 Overview: show basic stats of quality score and sales info  
 ![overview](../image/dashboard_view_1.jpg)
 
-Fitler&Explore: with flexible filter, show distribution of key metrics
+Fitler&Explore: with flexible filter, show distribution of key metrics  
 ![filter](../image/dashboard_view_2.jpg)  
 
 Listing Details: search for individual product  
