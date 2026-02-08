@@ -1,11 +1,11 @@
-1. **Problem Understanding: Brief summary of the business problem**  
+**Problem Understanding: Brief summary of the business problem**  
 
-In the context of e-commerce platform, product listing quality significantly impacts conversion rates and seller success. My task is to build a listing quality evaluation framework, based on listing and sales information for 100,000 products and to generate recommendation for those products identified as low listing quality.
+Within the context of an e-commerce platform, product listing quality is a critical driver of conversion rates and seller success. My objective was to build a quality evaluation framework, analyzing listing and sales data for 100,000 products to generate improvement recommendations for those identified as low quality.
 
-2. **Methodology**  
-Among 48 columns in the dataset, there are two main quantative metrics: price and sales (sold_quantity). As the product category varies from car to office supplies, I did not compare abosulte value, but instead using the price/sales ranking within each category to quantify each product's sales performance. Only category with more than 10 products are considered (~74%). Sales is the major output for quality scoring, but price is also relied upon to determine priority of fixing (for instance, if adding video link can boost 10% sales, it is recommended to work on high-value products first).  
+**Methodology**  
+Of the 48 columns in the dataset, two are primary quantitative metrics: price and sales volume (sold_quantity). Given the vast product range—from cars to office supplies—I avoided comparing absolute values. Instead, I used each product's **price and sales rank within its specific category** to quantify sales performance. Only categories with more than 10 products were considered (approximately 74% of the data). While sales volume is the core output for the quality score, **price is incorporated to prioritize interventions** (e.g., if adding a video link could boost sales by 10%, it is recommended to focus on higher-value products first).   
 
-The remaining columns are qualitative metrics which provide detailed information of the product. Among them I picked the following key factors to build scoring systems. I have analyzed a few other metrics such as shipping info, picture quality, which did not make it to the list due to minimal differentiation.  
+The remaining columns consist of qualitative metrics containing detailed product information. From these, I selected the following key factors to construct the scoring system. I also analyzed several other metrics—such as shipping information and picture quality—which were excluded from the final model due to their minimal power to differentiate listing quality.  
 **Title Length (characters)  
 Title Quality Score (depending on info density, key elements, placeholder words, repeated words,etc)  
 Whether it has video  
@@ -14,9 +14,10 @@ Number of Pictures
 Attributes Entry Count  
 Attributes Completeness**  
 
-The weight of each factor is determined by correlation coefficient, in other words, how significant the impact of each factor on sales ranking within category.  
 
-With scoring system implemented, low (below 25th percentile) and median (25th ~ 50th percentile)  score products are identified. To achieve highest ROI, fix plan is provided for products with high sales increase potentail and with easy fix (title related issues)  
+The weight assigned to each factor is determined by its correlation coefficient, which quantifies the significance of its impact on a product's sales ranking within its category.  
+
+After implementing the scoring system, products are identified as having low (below the 25th percentile) or median (25th to 50th percentile) quality scores. To maximize return on investment (ROI), a corrective action plan is specifically generated for products that exhibit both a high potential for sales increase and issues that are straightforward to resolve, such as those related to product titles.  
 
 3. **Key Findings**:
 - Main insights from EDA  
