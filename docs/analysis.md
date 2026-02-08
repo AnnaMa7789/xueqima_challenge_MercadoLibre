@@ -19,12 +19,12 @@ After implementing the scoring system, products are identified as having low (be
 
 **Key Findings**
 Main insights from EDA  
->quantative metrics:  
+* quantative metrics:  
 >The total sales are 239,699, which indicates a relatively low (2.39) sales per product.  Median price is 250, variation range is very large due to different product types. 99.99% of products never change price since listing is created.  
->qualitative metrics:  
+* qualitative metrics:  
 > >titles: there are 98,823 unique titles grouped under 10,907 categories. Average title length is 45 characters (ranging from 1 to 100). length of title has positive impact on sales with correlation coefficient = 0.625  
-video: only 2985 (~3%) products with video links.   
-> >image: about 33.3% products have 1 picture, about 64.3% have 2-6 pictures. Only 789 products (~ 0.8%) are missing pictures. Majority of picture size is 500x375 or 500x500 and majority of max pricture size 1200x900  
+video: only 2985 (about 3%) products with video links.   
+> >image: about 33.3% products have 1 picture, about 64.3% have 2-6 pictures. Only 789 products (about 0.8%) are missing pictures. Majority of picture size is 500x375 or 500x500 and majority of max pricture size 1200x900  
 > >update frequency: ~70% of listings have never been updated since creation, ~30% are updated within 2 months.  
 > >attribute completeness: ~87% products have blank attributes, and ~10% have 1 or 2 entries. For those products who have at least one entries, about 80% have complete field information.  entry number (correlation  0.039) and completeness (correlation 0.091 ) both have positive impact on sales.   
 > >shipping info completeness：all products have shipping and there is mininal differentiation regarding completeness.
@@ -66,13 +66,13 @@ Top 5 recommendations are:
    Difficulty: HARD
 
 
-based on the assumption that 
-6. **GenAI Usage**:
-Tools: deepseek
-Here is the function to Use AI to analyze listings with low quality scores and provide recommendation
+Based on the assumption products with quality score lower than 25th percentile can be improved by 10%, sales increase is 189 units and revenue increase is $160,972.57. if improved by 25%, sales increase is 473 units and revenue increase is $402,431.43.  
 
-sample prompt:  
-   system_prompt = '''
+
+**GenAI Usage**:
+Tools: deepseek  
+sample prompt:    
+>system_prompt = '''
 You are an experienced e-commerce optimization specialist for MercadoLibre.
 Your expertise is in identifying and fixing non-title related listing quality issues.
 
@@ -89,8 +89,8 @@ Your task is to:
 3. Provide actionable, specific recommendations
 4. Focus on quick wins that sellers can implement immediately
 
-'''  
-input_prompt = f'''
+'''    
+>input_prompt = f'''
 LISTINGS DATA:
 Total listings analyzed: {len(listings_data)}
 All listings have: Good title scores (≥70) but Low overall quality scores (≤60)
@@ -146,101 +146,23 @@ FORMAT RESPONSE AS JSON:
 
 Focus on PRACTICAL, ACTIONABLE advice that sellers can implement without technical expertise.
 '''  
-sample output='''
-1. Listing ID: MLA578261979
-   Current Score: 40.6
-   Main Issues: Only 1 image, No video
-                (+ 2 more)
-   Top Recommendation: Add at least 3 more high-quality photos showing different angles, details, and product in use
-   Improvement Potential: 15-23 points
-   Priority: HIGH
-   Time to Implement: 15-20 minutes
+> sample output is shown below
+![sample_output](../image/result_fin.png)  
 
-2. Listing ID: MLA583311895
-   Current Score: 40.16
-   Main Issues: Only 1 image, No video
-                (+ 1 more)
-   Top Recommendation: Add 4-5 photos showing front, back, close-up of fabric, size label, and on a model if possible
-   Improvement Potential: 15-23 points
-   Priority: HIGH
-   Time to Implement: 15 minutes
-
-3. Listing ID: MLA583879540
-   Current Score: 40.18
-   Main Issues: Only 1 image, No video
-                (+ 1 more)
-   Top Recommendation: Upload 4-5 images showing design details, fabric texture, tag with size, and full garment
-   Improvement Potential: 15-21 points
-   Priority: HIGH
-   Time to Implement: 15 minutes
-
-4. Listing ID: MLA582209130
-   Current Score: 41.15
-   Main Issues: Only 1 image, No video
-                (+ 2 more)
-   Top Recommendation: Add 3-4 additional photos showing embroidery/details, size tag, and different angles
-   Improvement Potential: 15-23 points
-   Priority: HIGH
-   Time to Implement: 15 minutes
-
-5. Listing ID: MLA583968337
-   Current Score: 38.39
-   Main Issues: Only 1 image, No video
-                (+ 1 more)
-   Top Recommendation: Add 4-5 photos showing tread pattern, sidewalls, DOT date code, and overall condition
-   Improvement Potential: 15-23 points
-   Priority: HIGH
-   Time to Implement: 20 minutes
-
-6. Listing ID: MLA576583331
-   Current Score: 40.18
-   Main Issues: Only 2 images, No video
-                (+ 1 more)
-   Top Recommendation: Add 3-4 more photos showing fabric close-up, pattern details, and on-model if possible
-   Improvement Potential: 14-21 points
-   Priority: HIGH
-   Time to Implement: 15 minutes
-
-7. Listing ID: MLA584564101
-   Current Score: 41.69
-   Main Issues: Only 3 images, No video
-                (+ 2 more)
-   Top Recommendation: Add 2-3 more photos showing part numbers, connection points, and installation orientation
-   Improvement Potential: 16-25 points
-   Priority: HIGH
-   Time to Implement: 20 minutes
-
-8. Listing ID: MLA584708202
-   Current Score: 43.77
-   Main Issues: No video, Only 1 attribute
-                (+ 1 more)
-   Top Recommendation: Add 10+ relevant attributes including part number, vehicle compatibility, dimensions, and condition details
-   Improvement Potential: 17-26 points
-   Priority: MEDIUM
-   Time to Implement: 30 minutes
-
-9. Listing ID: MLA576525056
-   Current Score: 46.16
-   Main Issues: Only 4 images, No video
-                (+ 1 more)
-   Top Recommendation: Add 2-3 more photos showing back detail, lining, and close-up of embellishments
-   Improvement Potential: 10-16 points
-   Priority: MEDIUM
-   Time to Implement: 15 minutes
-
-10. Listing ID: MLA574765459
-   Current Score: 46.11
-   Main Issues: Only 3 images, No video
-                (+ 2 more)
-   Top Recommendation: Add 2-3 more photos showing logo details, fabric texture, and care labels
-   Improvement Potential: 12-20 points
-   Priority: MEDIUM
-   Time to Implement: 15 minutes
-'''
-- Value delivered  
+Value delivered  
 This diagnostic assessment details the reasons behind low listing quality and outlines corrective action plans. Given the multitude of potential causes, AI efficiently filters and prioritizes the issues offering the highest incremental benefit—that is, those whose resolution would have a quantifiable impact on sales. Consequently, it not only generates considerable savings in time and labor but also ensures that efforts are channeled toward the most critical areas.
 
-visualization
+**Visualization**
 I used Gradio to build the dashboard for easier intergration with GenAI. 
+Overview: show basic stats of quality score and sales info  
 ![overview](../image/dashboard_view_1.jpg)
+
+Fitler&Explore: with flexible filter, show distribution of key metrics
+![filter](../image/dashboard_view_2.jpg)  
+
+Listing Details: search for individual product  
+![listingdetail](../image/dashboard_view_3.jpg)  
+
+Al Analysis: pattern and recommendation generated by AI  
+![ai](../image/dashboard_view_4.jpg) 
 
