@@ -1,27 +1,19 @@
 # MercadoLibre_project
 ```markdown
+# git clone
+git clone https://github.com/AnnaMa7789/MercadoLibre_project.git
+
 # Setup
 pip install -r requirements.txt
 
 # Configure API key
-# Here is my way: I created env in juypterlab directory using the following code.
-# 1. check dir
-current_dir = os.getcwd()
-print(f"dir: {current_dir}")
-
-# 3. create .env 
-try:
-    env_path = os.path.join(current_dir, '.env')
-    with open(env_path, 'w') as f:
-        f.write('OPENAI_API_KEY=sk-e9588fb1d1914dd6bab3e6093f4940fc\n')
-    print(f"✅ successfully created .env: {env_path}")
-except PermissionError as e:
-    print(f"❌ error: {e}")
+cp .env.example .env # Edit .env file with your API keys OPENAI_API_KEY=your_own_key
 
 
-# Run notebooks
-jupyter notebook
+# Run function (dashboard is defined as a function in genai_analyzer.py)
+from my_module import my_function
 
-# Run dashboard
-import function from dashboard.py
+result = my_function(input_field)
+
+
 ```
