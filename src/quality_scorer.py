@@ -1168,7 +1168,7 @@ def calculate_listing_quality_score(analysis_df, weights):
         """Calculate score based on title quality score"""
         if pd.isna(title_score):
             return 0
-        return min(float(title_score), 100)
+        return min(float(title_score)*100, 100)
     
     def calculate_video_content_score(has_video):
         """Calculate score for video presence"""
